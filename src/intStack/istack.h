@@ -13,7 +13,20 @@
  * PRIVATE TYPE DECLARATION
  ********************/
 
+struct Node
+{
+	int data;
+	struct Node *next;
+};
+typedef struct Node Node_t;
 
+struct List
+{
+   Node_t * head;
+   
+};
+
+typedef struct List IntStack_t;
 
 
 /*********************
