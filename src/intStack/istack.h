@@ -13,16 +13,16 @@
  * PRIVATE TYPE DECLARATION
  ********************/
 
-struct Node
+struct Node2
 {
 	int data;
-	struct Node *next;
+	struct Node2 *next;
 };
-typedef struct Node Node_t;
+typedef struct Node2 Node2_t;
 
 struct List
 {
-   Node_t * head;
+   Node2_t * head;
    
 };
 

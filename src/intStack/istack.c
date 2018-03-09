@@ -20,10 +20,10 @@
 
 /* helper functions prototypes*/
 
-Node_t* nodeCreate(int value) ;
-Node_t* findPriorNode(IntStack_t* stack, Node_t* cursor);
-void llInsertAfter( IntStack_t* stack, Node_t* cursor, int value);
-void llLinkAfter(IntStack_t* stack, Node_t* cursor, Node_t* NewNode);
+Node2_t* Node2Create(int value) ;
+Node2_t* findPriorNode2(IntStack_t* stack, Node2_t* cursor);
+void stackInsertAfter( IntStack_t* stack, Node2_t* cursor, int value);
+void stackLinkAfter(IntStack_t* stack, Node2_t* cursor, Node2_t* NewNode2);
 
 /*
 
@@ -33,41 +33,41 @@ void llLinkAfter(IntStack_t* stack, Node_t* cursor, Node_t* NewNode);
 
 */
 /*
-* initialize a node pointing to NULL 
+* initialize a Node2 pointing to NULL 
 */
 
-Node_t* nodeCreate(int value) 
+Node2_t* Node2Create(int value) 
 {
-    Node_t* node = malloc(sizeof(Node_t));
-    node->data = value;
-    node->next = NULL;
-    return node;
+    Node2_t* Node2 = malloc(sizeof(Node2_t));
+    Node2->data = value;
+    Node2->next = NULL;
+    return Node2;
 }
 /*
-* print the actual node data value 
+* print the actual Node2 data value 
 */
-void nodePrint(Node_t node) 
+void Node2Print(Node2_t Node2) 
 {
-    printf("[%d]%s\n", node.data, node.next ? "" : "\nbottom");
+    printf("[%d]%s\n", Node2.data, Node2.next ? "" : "\nbottom");
 }
 
 
 /*
-*  receives pointer to the given node and then inserts a node after it. 
+*  receives pointer to the given Node2 and then inserts a Node2 after it. 
 */
-void llInsertAfter( IntStack_t* stack, Node_t* cursor, int value)  
+void stackInsertAfter( IntStack_t* stack, Node2_t* cursor, int value)  
 {
-	Node_t* NewNode =nodeCreate(value);
-	llLinkAfter(stack,cursor,NewNode);	
+	Node2_t* NewNode2 =Node2Create(value);
+    stackLinkAfter(stack,cursor,NewNode2);	
 }
 
 /*
-* link in after at specified node 
+* link in after at specified Node2 
 */
-void llLinkAfter(IntStack_t* stack, Node_t* cursor, Node_t* NewNode)
+void stackLinkAfter(IntStack_t* stack, Node2_t* cursor, Node2_t* NewNode2)
 {
-  NewNode->next = cursor->next;
-  cursor->next = NewNode;
+  NewNode2->next = cursor->next;
+  cursor->next = NewNode2;
 	
 
 }
@@ -83,7 +83,7 @@ void llLinkAfter(IntStack_t* stack, Node_t* cursor, Node_t* NewNode)
 IntStack_t istackCreate( )
 {
    
-   Node_t* dummy= nodeCreate(INT_MIN);
+   Node2_t* dummy= Node2Create(INT_MIN);
    IntStack_t stack= {dummy};
    return stack;
 
@@ -112,12 +112,12 @@ IntStack_t istackCreate( )
  */
 void istackPrint( IntStack_t stack  )
 {
-     Node_t* cur = stack.head->next; 
+     Node2_t* cur = stack.head->next; 
   printf("\nList:\n  ");
   
   while (cur != NULL) 
   {
-	  nodePrint(*cur);
+	  Node2Print(*cur);
       cur = cur->next;
 	  }
 	  
@@ -158,11 +158,11 @@ int istackTop( IntStack_t stack )
 int istackPop( IntStack_t *stack )
 {
    assert(!istackIsEmpty(*stack));
-   Node_t* node = stack->head->next;
-  stack->head->next=node->next;
+   Node2_t* Node2 = stack->head->next;
+  stack->head->next=Node2->next;
    
-   int value = node->data;
-   free(node);
+   int value = Node2->data;
+   free(Node2);
 	   
  return value; 
     
@@ -176,9 +176,9 @@ int istackPop( IntStack_t *stack )
 int istackPush( IntStack_t *stack, int item)
 {
     
-    Node_t* newNode = nodeCreate(item);
+    Node2_t* newNode2 = Node2Create(item);
    
-	llInsertAfter(stack,stack->head,item);
+	stackInsertAfter(stack,stack->head,item);
 	
  
     
