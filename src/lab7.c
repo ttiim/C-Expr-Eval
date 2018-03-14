@@ -232,8 +232,57 @@ Queue_t toPostfix(Queue_t infix_tokens)
 // PRE: postfix contains a valid post-fix algebraic expression, as defined above
 // 		  Variable substitutions still need to be performed.
 // POST: returns the result of evaluating the post-fix expression.
+
 int evalExpr(Queue_t expression)
 {
+ IntStack_t evalStack= istackCreate( );
  
- /// as per tect book //	
+ int op1, op2, value;
+ 
+ while( qDequeue(&expression)!= NULL)  //might be logic error becasue deque uses assert-> tail pointer?
+ {
+ 	  if(isOperand(qDequeue(&expression)))   // 6 7 a are operands
+ 	  {
+ 		  istackPush(&evalStack, (int)(qDequeue(&expression)-'0')); //we need integer type because using integer stack. (without int?)
+ 	  	
+ 	  }
+ 	  else
+ 	  {
+ 		op2= istackPop(&evalStack);
+ 		op1= istackPop(&evalStack);
+ 	    int opert = (int)(qDequeue(&expression));
+ 	    switch(opert)                                 //not happy with this code at all. re-write into its own function ffs.
+ 	    {
+ 	      case '+':
+ 	      value = op1 + op2;
+ 	      break;
+ 	    
+ 	      case '-':
+ 	      value = op1-op2;
+ 	      break	;
+ 	    
+ 	      case '/':
+ 	      value= op1 / op2;
+ 	      break;
+ 	    
+ 	      case '*':
+ 	      value =op1*op2;
+ 	      break;
+ 	    	
+ 	    }
+ 	    
+ 	    istackPush(&evalStack, value);
+ 	  	
+ 	  }
+ 	
+ }
+ 
+ int val= istackPop(&evalStack);
+ 
+ assert(istackIsEmpty(evalStack));    //need to stop memory leak. ie memory managment
+ istackDestroy(&evalStack);
+ return (val);
+	
 }
+
+	

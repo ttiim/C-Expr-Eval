@@ -18,7 +18,7 @@
 
 #include "istack.h"
 
-/* helper functions prototypes*/
+// helper functions prototypes
 
 Node2_t* Node2Create(int value) ;
 Node2_t* findPriorNode2(IntStack_t* stack, Node2_t* cursor);
@@ -26,12 +26,11 @@ void stackInsertAfter( IntStack_t* stack, Node2_t* cursor, int value);
 void stackLinkAfter(IntStack_t* stack, Node2_t* cursor, Node2_t* NewNode2);
 
 /*
-
 *Helper functions
-*
-*
 
 */
+
+
 /*
 * initialize a Node2 pointing to NULL 
 */
@@ -87,10 +86,7 @@ IntStack_t istackCreate( )
    IntStack_t stack= {dummy};
    return stack;
 
-    
 }
-
-
 
 
 /*
@@ -99,8 +95,7 @@ IntStack_t istackCreate( )
  void istackDestroy( IntStack_t *stack )
  {
      
- 
-	 while (stack->head->next != NULL) 
+     while (stack->head->next != NULL) 
 	 {
 		 istackPop(stack);
 		 }
@@ -112,7 +107,7 @@ IntStack_t istackCreate( )
  */
 void istackPrint( IntStack_t stack  )
 {
-     Node2_t* cur = stack.head->next; 
+  Node2_t* cur = stack.head->next; 
   printf("\nList:\n  ");
   
   while (cur != NULL) 
@@ -157,14 +152,22 @@ int istackTop( IntStack_t stack )
  */
 int istackPop( IntStack_t *stack )
 {
-   assert(!istackIsEmpty(*stack));
-   Node2_t* Node2 = stack->head->next;
-  stack->head->next=Node2->next;
-   
-   int value = Node2->data;
-   free(Node2);
-	   
- return value; 
+  int value;
+  if(istackIsEmpty(*stack))
+  {
+      printf("\nSTACK UNDERFLOW");
+      
+  }
+     else
+     {
+         assert(!istackIsEmpty(*stack));
+         Node2_t* Node2 = stack->head->next;
+         stack->head->next=Node2->next;
+          value = Node2->data;
+         free(Node2);
+          
+      }
+      return value; 
     
 }
 
@@ -180,8 +183,5 @@ int istackPush( IntStack_t *stack, int item)
    
 	stackInsertAfter(stack,stack->head,item);
 	
- 
-    
-    
 }
 
