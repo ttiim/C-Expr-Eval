@@ -242,18 +242,14 @@ Queue_t toPostfix(Queue_t infix_tokens)
 // 		  Variable substitutions still need to be performed.
 // POST: returns the result of evaluating the post-fix expression.
 
-/*
----------------------------ASK BECAUSE I HAVE DESTROYED THE ACTUAL QUEUE!!!!!---------------------
----------------------------do i need to make a copy of it? then i can have side affects? or was the purpose of the queue to destroy it?
----------------------------- solution: write a copyque function---------- also what if i have floats??? can i change this????()
-*/
+
 int evalExpr(Queue_t expression)
 {
  IntStack_t evalStack= istackCreate( );
-// qEnqueue(&expression,'\0');
+
  int op1, op2, val;
  
- while(!qIsEmpty(expression))  //check queue not empty
+ while(!qIsEmpty(expression))  
  {
  	  istackPrint(evalStack);
  	  char* item = (qDequeue(&expression));
@@ -262,7 +258,7 @@ int evalExpr(Queue_t expression)
  	  
  	  if(isOperand(item))   // 6 7 a are operands
  	  {
- 		  istackPush(&evalStack, atoi(item)); //we need integer type because using integer stack. (without int?)
+ 		  istackPush(&evalStack, atoi(item)); 
  	  	  
  	  }
  	  
@@ -285,7 +281,7 @@ int evalExpr(Queue_t expression)
   // istackPrint(evalStack);
   val= istackPop(&evalStack);
  
- assert(istackIsEmpty(evalStack));    //need to stop memory leak. ie memory managment
+ assert(istackIsEmpty(evalStack));    
  istackDestroy(&evalStack);
  //qPrint(expression);
  return (val);
