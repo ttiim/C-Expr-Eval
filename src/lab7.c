@@ -250,12 +250,12 @@ Queue_t toPostfix(Queue_t infix_tokens)
 int evalExpr(Queue_t expression)
 {
  IntStack_t evalStack= istackCreate( );
- qEnqueue(&expression,'\0');
+// qEnqueue(&expression,'\0');
  int op1, op2, val;
  
- while( qFront(expression)!= NULL)  //check queue not empty
+ while(!qIsEmpty(expression))  //check queue not empty
  {
- 	  //istackPrint(evalStack);
+ 	  istackPrint(evalStack);
  	  char* item = (qDequeue(&expression));
  	 
  	  
@@ -272,7 +272,7 @@ int evalExpr(Queue_t expression)
  		op1= istackPop(&evalStack);
  	    //printf("\nop1    [%i]",op1);
  	    //printf("\n       [%s]",item);
- 	   // printf("\nop2    [%i]",op2);
+ 	    //printf("\nop2    [%i]",op2);
         
  	    istackPush(&evalStack,IntOperation(op2,op1,item) );
  	     
