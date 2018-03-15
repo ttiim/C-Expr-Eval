@@ -47,7 +47,7 @@ Node2_t* Node2Create(int value)
 */
 void Node2Print(Node2_t Node2) 
 {
-    printf("[%d]%s\n", Node2.data, Node2.next ? "" : "\nbottom");
+    printf("[%d]  %s\n", Node2.data, Node2.next ? " " : "\n --|");
 }
 
 
@@ -160,7 +160,7 @@ int istackPop( IntStack_t *stack )
   }
      else
      {
-         assert(!istackIsEmpty(*stack));
+         //assert(!istackIsEmpty(*stack));
          Node2_t* Node2 = stack->head->next;
          stack->head->next=Node2->next;
           value = Node2->data;

@@ -28,6 +28,11 @@ bool isCloseBracket(char* token);
 bool isBracket(char* token);
 int precedence(char* token);
 
+
+int IntOperation ( int op2, int op1, char*item);
+
+
+
 // Experession Evaluator Functions
 Queue_t toPostfix(Queue_t infix_tokens);
 int evalExpr(Queue_t postfix_tokens);
@@ -54,8 +59,12 @@ int main(int argc, char* argv[]) {
    
    printf("Answer: %d\n", evalExpr(postfix_expression));
 
+//qPrint(postfix_expression);
    qDestroy(&infix_expression);
    qDestroy(&postfix_expression);
+   
+   
+   
    return 0;
 }
 
@@ -233,25 +242,62 @@ Queue_t toPostfix(Queue_t infix_tokens)
 // 		  Variable substitutions still need to be performed.
 // POST: returns the result of evaluating the post-fix expression.
 
+/*
+---------------------------ASK BECAUSE I HAVE DESTROYED THE ACTUAL QUEUE!!!!!---------------------
+---------------------------do i need to make a copy of it? then i can have side affects? or was the purpose of the queue to destroy it?
+---------------------------- solution: write a copyque function---------- also what if i have floats??? can i change this????()
+*/
 int evalExpr(Queue_t expression)
 {
  IntStack_t evalStack= istackCreate( );
+ qEnqueue(&expression,'\0');
+ int op1, op2, val;
  
- int op1, op2, value;
- 
- while( qDequeue(&expression)!= NULL)  //might be logic error becasue deque uses assert-> tail pointer?
+ while( qFront(expression)!= NULL)  //check queue not empty
  {
- 	  if(isOperand(qDequeue(&expression)))   // 6 7 a are operands
+ 	  //istackPrint(evalStack);
+ 	  char* item = (qDequeue(&expression));
+ 	 
+ 	  
+ 	  
+ 	  if(isOperand(item))   // 6 7 a are operands
  	  {
- 		  istackPush(&evalStack, (int)(qDequeue(&expression)-'0')); //we need integer type because using integer stack. (without int?)
- 	  	
+ 		  istackPush(&evalStack, atoi(item)); //we need integer type because using integer stack. (without int?)
+ 	  	  
  	  }
+ 	  
  	  else
  	  {
  		op2= istackPop(&evalStack);
  		op1= istackPop(&evalStack);
- 	    int opert = (int)(qDequeue(&expression));
- 	    switch(opert)                                 //not happy with this code at all. re-write into its own function ffs.
+ 	    //printf("\nop1    [%i]",op1);
+ 	    //printf("\n       [%s]",item);
+ 	   // printf("\nop2    [%i]",op2);
+        
+ 	    istackPush(&evalStack,IntOperation(op2,op1,item) );
+ 	     
+ 	  }
+ 	  
+ 	  
+ 	
+ }
+ 
+  // istackPrint(evalStack);
+  val= istackPop(&evalStack);
+ 
+ assert(istackIsEmpty(evalStack));    //need to stop memory leak. ie memory managment
+ istackDestroy(&evalStack);
+ //qPrint(expression);
+ return (val);
+	
+}
+
+	
+	int IntOperation ( int op2, int op1, char*item)
+	{
+		int value;
+		
+		switch(*item)                                 
  	    {
  	      case '+':
  	      value = op1 + op2;
@@ -266,23 +312,9 @@ int evalExpr(Queue_t expression)
  	      break;
  	    
  	      case '*':
- 	      value =op1*op2;
+ 	      value = op1 * op2;
  	      break;
  	    	
  	    }
- 	    
- 	    istackPush(&evalStack, value);
- 	  	
- 	  }
- 	
- }
- 
- int val= istackPop(&evalStack);
- 
- assert(istackIsEmpty(evalStack));    //need to stop memory leak. ie memory managment
- istackDestroy(&evalStack);
- return (val);
-	
-}
-
-	
+		
+	}
