@@ -6,6 +6,15 @@
  *  COMP220: Lab 7 Starter Project - Stacks & Queues
  *  Author:  Joseph Fall
  *  Date:    Mar. 6, 2018
+ * 
+ * evaluation: 
+ * Capilano University
+*   Comp 220- Professor Jospeph Fall
+*   Authour: Tim Wriglesworth
+*   Worked in collaboration with Karan Nedungadi
+*   Date: 08.02.18
+    Lab 7
+ * 
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -251,14 +260,14 @@ int evalExpr(Queue_t expression)
  
  while(!qIsEmpty(expression))  
  {
- 	  istackPrint(evalStack);
+ 	  //istackPrint(evalStack);
  	  char* item = (qDequeue(&expression));
  	 
  	  
  	  
  	  if(isOperand(item))   // 6 7 a are operands
  	  {
- 		  istackPush(&evalStack, atoi(item)); 
+ 		  istackPush(&evalStack, operandValue(item));   //or use isoperand that returns isoperand type
  	  	  
  	  }
  	  

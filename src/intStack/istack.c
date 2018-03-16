@@ -2,7 +2,7 @@
 *   Capilano University
 *   Comp 220- Professor Jospeph Fall
 *   Authour: Tim Wriglesworth
-*   Worked in collaboration 
+*   Worked in collaboration with Karan Nedungadi
 *   Date: 08.02.18
     Lab 7
 *   
